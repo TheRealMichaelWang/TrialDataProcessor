@@ -1,0 +1,9 @@
+trial_num,thisFace,thisLoc,thisWpn,correct_gang,wrong_gang,correct_side,response_x,timesss
+0,images/faces/youngmale1.jpg,images/locations/bank3.jpg,images/weapons/hammer1.jpg,images/gangs/gang_3.jpg,images/gangs/gang_1.jpg,right,correct,2025-01-17 13:07:31.550554
+1,images/faces/oldmale2.jpg,images/locations/bank1.jpg,images/weapons/hammer2.jpg,images/gangs/gang_1.jpg,images/gangs/gang_3.jpg,left,incorrect,2025-01-17 13:08:02.475552
+2,images/faces/oldfemale2.jpg,images/locations/house2.jpg,images/weapons/hammer1.jpg,images/gangs/gang_1.jpg,images/gangs/gang_3.jpg,left,correct,2025-01-17 13:08:30.075006
+3,images/faces/youngfemale1.jpg,images/locations/storage3.jpg,images/weapons/gun2.jpg,images/gangs/gang_2.jpg,images/gangs/gang_3.jpg,left,correct,2025-01-17 13:08:54.660989
+4,images/faces/oldmale1.jpg,images/locations/storage1.jpg,images/weapons/hammer2.jpg,images/gangs/gang_1.jpg,images/gangs/gang_2.jpg,left,incorrect,2025-01-17 13:09:22.842030
+5,images/faces/youngmale2.jpg,images/locations/bank4.jpg,images/weapons/gun1.jpg,images/gangs/gang_3.jpg,images/gangs/gang_1.jpg,right,incorrect,2025-01-17 13:10:20.774796
+6,images/faces/oldmale1.jpg,images/locations/bank2.jpg,images/weapons/hammer1.jpg,images/gangs/gang_1.jpg,images/gangs/gang_3.jpg,left,correct,2025-01-17 13:10:48.990452
+7,images/faces/youngfemale2.jpg,images/locations/storage4.jpg,images/weapons/gun2.jpg,images/gangs/gang_2.jpg,images/gangs/gang_1.jpg,right,incorrect,2025-01-17 13:10:58.495448
