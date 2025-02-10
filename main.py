@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import List
 
 if len(sys.argv) < 2:
-    print("Usage: python main.py <csv file> <output file>")
+    print("Usage: python main.py <csv file> <output name>")
     quit()
 
 input_file = sys.argv[1]
@@ -71,8 +71,8 @@ def quadratic_regression(reg_trials: (int, datetime)) -> linear_model.LogisticRe
 
 def rolling_averages(reg_trials: (int, datetime)) -> List[np.floating]:
     moving_averages = []
-    for i in range(2, len(reg_trials)):
-        moving_averages.append(np.mean([reg_trials[i][0], reg_trials[i - 1][0], reg_trials[i - 2][0]]))
+    for i in range(1, len(reg_trials) - 1):
+        moving_averages.append(np.mean([reg_trials[i - 1][0], reg_trials[i][0], reg_trials[i + 1][0]]))
     return moving_averages
 
 single_var = single_var_regression(trials)
@@ -84,4 +84,6 @@ with open("single_var_" + output_file + ".pkl", 'wb') as single_var_file:
     pickle.dump(single_var, single_var_file)
 with open("quadratic_" + output_file + ".pkl", 'wb') as quadratic_var_file:
     pickle.dump(quadratic, quadratic_var_file)
-
+with open("rolling_avgs_" + output_file + ".csv", 'w', newline='') as rolling_avgs_file:
+    writer = csv.writer(rolling_avgs_file, delimiter=',')
+    writer.writerows([[i + 1, averages[i]] for i in range(len(averages))])
