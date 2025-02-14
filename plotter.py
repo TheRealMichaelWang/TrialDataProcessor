@@ -32,7 +32,7 @@ x = np.arange(0, len(trials), 1)
 y1 = single_var_model.predict(x.reshape(-1, 1))
 
 #x2 = np.array([[i ** (j + 1) for j in range(5)] for i in range(100)])
-poly_x = np.array([x, x**2, x**3, x**4, x**5]).reshape(-1, 5)
+poly_x = np.array([x, x**2, x**3, x**4, x**5]).T
 y2 = quadratic_model.predict(poly_x)
 
 #x3 = np.arange(1, len(moving_avgs) + 1)

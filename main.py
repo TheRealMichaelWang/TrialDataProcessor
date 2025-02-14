@@ -3,10 +3,13 @@ import sys
 import os
 import numpy as np
 import pickle
+
+import sklearn.linear_model
 from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 from datetime import datetime
 from typing import List
+import statsmodels.api as sm
 
 if len(sys.argv) < 2:
     print("Usage: python main.py <csv file> <output name>")
@@ -56,16 +59,16 @@ with open(output_file + ".csv", 'w', newline='') as csv_file:
     writer.writerows(new_lines)
 
 #perform logistic regression with one variable, trial_num
-def single_var_regression(reg_trials: (int, datetime)) -> linear_model.LogisticRegression:
+def single_var_regression(reg_trials: (int, datetime)) -> linear_model.LinearRegression:
     x_train = np.array([i for i in range(len(reg_trials))])
     y_train = np.array([trial[0] for trial in reg_trials])
 
-    model = linear_model.LogisticRegression()
+    model = linear_model.LinearRegression()
     model.fit(x_train.reshape(-1, 1), y_train)
 
     return model
 
-def quadratic_regression(reg_trials: (int, datetime)) -> linear_model.LogisticRegression:
+def quadratic_regression(reg_trials: (int, datetime)) -> linear_model.LinearRegression: #sm.Logit:
     x_train = np.array([[pow(i, j) for j in range(1,6)] for i in range(len(reg_trials))])
     y_train = np.array([trial[0] for trial in reg_trials])
 
@@ -73,11 +76,16 @@ def quadratic_regression(reg_trials: (int, datetime)) -> linear_model.LogisticRe
     #x_poly = PolynomialFeatures(degree=5, include_bias=False)
     #poly_features = x_poly.fit_transform(x.reshape(-1, 1))
 
-    model = linear_model.LogisticRegression(solver='saga', C=10, max_iter=5000)
+    #model = linear_model.LogisticRegression(solver='saga', penalty='l1', C=10, max_iter=10000)
+    model = linear_model.LinearRegression()
     model.fit(x_train, y_train)
     #model.fit(poly_features, y_train)
 
-    predict = model.predict(x_train)
+    #predict = model.predict(x_train)
+
+    #model = sm.Logit(x_train, y_train)
+    #model.fit()
+    #model.summary()
 
     return model
 
