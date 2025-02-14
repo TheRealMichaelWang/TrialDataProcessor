@@ -4,6 +4,7 @@ import os
 import numpy as np
 import pickle
 from sklearn import linear_model
+from sklearn.preprocessing import PolynomialFeatures
 from datetime import datetime
 from typing import List
 
@@ -38,9 +39,13 @@ with open(input_file) as csv_file:
             line[i] = simplify_path(line[i])
 
         assert int(line[categories["trial_num"]]) == len(trials)
+        try:
+            timestamp = datetime.strptime(line[categories["timesss"]], "%Y-%m-%d %H:%M:%S.%f")
+        except ValueError:
+            timestamp = datetime.strptime(line[categories["timesss"]], "%M:%S.%f")
         trials.append((
             1 if line[categories["response_x"]] == "correct" else 0,
-            datetime.strptime(line[categories["timesss"]], "%Y-%m-%d %H:%M:%S.%f"),
+            timestamp,
         ))
 
         new_lines.append(line)
@@ -55,7 +60,7 @@ def single_var_regression(reg_trials: (int, datetime)) -> linear_model.LogisticR
     x_train = np.array([i for i in range(len(reg_trials))])
     y_train = np.array([trial[0] for trial in reg_trials])
 
-    model = linear_model.LogisticRegression(solver='lbfgs', max_iter=1000)
+    model = linear_model.LogisticRegression()
     model.fit(x_train.reshape(-1, 1), y_train)
 
     return model
@@ -64,8 +69,15 @@ def quadratic_regression(reg_trials: (int, datetime)) -> linear_model.LogisticRe
     x_train = np.array([[pow(i, j) for j in range(1,6)] for i in range(len(reg_trials))])
     y_train = np.array([trial[0] for trial in reg_trials])
 
-    model = linear_model.LogisticRegression(solver='lbfgs', max_iter=1000)
-    model.fit(x_train.reshape(-1, 5), y_train)
+    #x = np.arange(0, len(reg_trials))
+    #x_poly = PolynomialFeatures(degree=5, include_bias=False)
+    #poly_features = x_poly.fit_transform(x.reshape(-1, 1))
+
+    model = linear_model.LogisticRegression(solver='saga', C=10, max_iter=5000)
+    model.fit(x_train, y_train)
+    #model.fit(poly_features, y_train)
+
+    predict = model.predict(x_train)
 
     return model
 
